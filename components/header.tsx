@@ -77,31 +77,32 @@ export default function Header() {
           </button>
         </div>
 
-      {/* Mobile Navigation Menu */}
-      {mobileMenuOpen && (
-        <div className="mobile-nav md:hidden">
-          <div className="flex flex-col items-center justify-center h-full gap-8 p-8">
-            {navItems.map((item, index) => (
-              <motion.div
-                key={item.path}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.3, delay: index * 0.1 }}
-              >
-                <Link
-                  href={item.path}
-                  className={`text-2xl font-medium transition-colors touch-manipulation ${
-                    pathname === item.path ? "text-python-yellow" : "text-muted-foreground hover:text-foreground"
-                  }`}
-                  onClick={() => setMobileMenuOpen(false)}
+        {/* Mobile Navigation Menu */}
+        {mobileMenuOpen && (
+          <div className="mobile-nav md:hidden">
+            <div className="flex flex-col items-center justify-center h-full gap-8 p-8">
+              {navItems.map((item, index) => (
+                <motion.div
+                  key={item.path}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.3, delay: index * 0.1 }}
                 >
-                  {item.name}
-                </Link>
-              </motion.div>
-            ))}
+                  <Link
+                    href={item.path}
+                    className={`text-2xl font-medium transition-colors touch-manipulation ${
+                      pathname === item.path ? "text-python-yellow" : "text-muted-foreground hover:text-foreground"
+                    }`}
+                    onClick={() => setMobileMenuOpen(false)}
+                  >
+                    {item.name}
+                  </Link>
+                </motion.div>
+              ))}
+            </div>
           </div>
-        </div>
-      )}
+        )}
+      </div>
     </header>
-  );
+  )
 }
