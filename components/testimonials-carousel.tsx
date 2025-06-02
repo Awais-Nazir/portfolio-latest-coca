@@ -73,10 +73,8 @@ export default function TestimonialsCarousel() {
   const [isDragging, setIsDragging] = useState(false)
   const [dragStart, setDragStart] = useState({ x: 0, y: 0 })
   const [cardPositions, setCardPositions] = useState<{ [key: number]: { x: number; y: number; rotation: number } }>({})
-  const [hoveredIndex, setHoveredIndex] = useState<number | null>(null)
   const [isMobile, setIsMobile] = useState(false)
   const containerRef = useRef<HTMLDivElement>(null)
-  const autoPlayRef = useRef<NodeJS.Timeout>()
 
   // Check if mobile
   useEffect(() => {
@@ -90,7 +88,7 @@ export default function TestimonialsCarousel() {
   }, [])
 
   // Function to calculate positions based on number of testimonials
-  const calculatePositions = (count: number, activeIndex: number, hovered: number | null = null) => {
+  const calculatePositions = (count: number, activeIndex: number) => {
     const positions: { [key: number]: { x: number; y: number; rotation: number } } = {}
 
     // If no testimonials, return empty object
@@ -105,14 +103,14 @@ export default function TestimonialsCarousel() {
     // For 2 testimonials, place them side by side
     if (count === 2) {
       positions[0] = {
-        x: activeIndex === 0 || hovered === 0 ? 0 : -150,
+        x: activeIndex === 0 ? 0 : -150,
         y: 0,
-        rotation: activeIndex === 0 || hovered === 0 ? 0 : -15,
+        rotation: activeIndex === 0 ? 0 : -15,
       }
       positions[1] = {
-        x: activeIndex === 1 || hovered === 1 ? 0 : 150,
+        x: activeIndex === 1 ? 0 : 150,
         y: 0,
-        rotation: activeIndex === 1 || hovered === 1 ? 0 : 15,
+        rotation: activeIndex === 1 ? 0 : 15,
       }
       return positions
     }
@@ -121,8 +119,8 @@ export default function TestimonialsCarousel() {
     const radius = Math.min(200, count * 40)
 
     for (let i = 0; i < count; i++) {
-      // If this card is active or hovered, bring it to center
-      if (i === activeIndex || i === hovered) {
+      // If this card is active, bring it to center
+      if (i === activeIndex) {
         positions[i] = { x: 0, y: 0, rotation: 0 }
       } else {
         const angle = (i * 360) / count
@@ -141,41 +139,16 @@ export default function TestimonialsCarousel() {
     setCardPositions(calculatePositions(testimonials.length, currentIndex))
   }, [currentIndex])
 
+  // Update positions when currentIndex changes
   useEffect(() => {
-    // Auto-play functionality for desktop only
-    if (!isMobile) {
-      const startAutoPlay = () => {
-        autoPlayRef.current = setInterval(() => {
-          if (!isDragging && hoveredIndex === null) {
-            setCurrentIndex((prev) => (prev + 1) % testimonials.length)
-          }
-        }, 4000)
-      }
-
-      startAutoPlay()
-
-      return () => {
-        if (autoPlayRef.current) {
-          clearInterval(autoPlayRef.current)
-        }
-      }
-    }
-  }, [isDragging, hoveredIndex, isMobile, testimonials.length])
-
-  // Update positions when currentIndex or hoveredIndex changes
-  useEffect(() => {
-    setCardPositions(calculatePositions(testimonials.length, currentIndex, hoveredIndex))
-  }, [currentIndex, hoveredIndex, testimonials.length])
+    setCardPositions(calculatePositions(testimonials.length, currentIndex))
+  }, [currentIndex, testimonials.length])
 
   const handleMouseDown = (e: React.MouseEvent, index: number) => {
     if (isMobile) return
     setIsDragging(true)
     setDragStart({ x: e.clientX, y: e.clientY })
     setCurrentIndex(index)
-
-    if (autoPlayRef.current) {
-      clearInterval(autoPlayRef.current)
-    }
   }
 
   const handleTouchStart = (e: React.TouchEvent, index: number) => {
@@ -183,64 +156,47 @@ export default function TestimonialsCarousel() {
     setIsDragging(true)
     setDragStart({ x: e.touches[0].clientX, y: e.touches[0].clientY })
     setCurrentIndex(index)
-
-    if (autoPlayRef.current) {
-      clearInterval(autoPlayRef.current)
-    }
   }
 
   const handleMouseMove = (e: React.MouseEvent) => {
     if (!isDragging || isMobile) return
 
     const deltaX = e.clientX - dragStart.x
-    const deltaY = e.clientY - dragStart.y
 
-    // Update position of the dragged card
-    setCardPositions((prev) => ({
-      ...prev,
-      [currentIndex]: {
-        ...prev[currentIndex],
-        x: prev[currentIndex].x + deltaX * 0.5,
-        y: prev[currentIndex].y + deltaY * 0.5,
-      },
-    }))
+    // Check for left/right drag to change testimonial
+    if (Math.abs(deltaX) > 50) {
+      if (deltaX > 0) {
+        // Dragged right - go to previous
+        setCurrentIndex((prev) => (prev - 1 + testimonials.length) % testimonials.length)
+      } else {
+        // Dragged left - go to next
+        setCurrentIndex((prev) => (prev + 1) % testimonials.length)
+      }
+      setIsDragging(false)
+    }
   }
 
   const handleTouchMove = (e: React.TouchEvent) => {
     if (!isDragging || isMobile) return
 
     const deltaX = e.touches[0].clientX - dragStart.x
-    const deltaY = e.touches[0].clientY - dragStart.y
 
-    // Update position of the dragged card
-    setCardPositions((prev) => ({
-      ...prev,
-      [currentIndex]: {
-        ...prev[currentIndex],
-        x: prev[currentIndex].x + deltaX * 0.5,
-        y: prev[currentIndex].y + deltaY * 0.5,
-      },
-    }))
+    // Check for left/right drag to change testimonial
+    if (Math.abs(deltaX) > 50) {
+      if (deltaX > 0) {
+        // Dragged right - go to previous
+        setCurrentIndex((prev) => (prev - 1 + testimonials.length) % testimonials.length)
+      } else {
+        // Dragged left - go to next
+        setCurrentIndex((prev) => (prev + 1) % testimonials.length)
+      }
+      setIsDragging(false)
+    }
   }
 
   const handleMouseUp = () => {
     if (isMobile) return
     setIsDragging(false)
-
-    // Reset positions after a short delay
-    setTimeout(() => {
-      setCardPositions(calculatePositions(testimonials.length, currentIndex, hoveredIndex))
-    }, 1000)
-  }
-
-  const handleCardHover = (index: number) => {
-    if (isMobile) return
-    setHoveredIndex(index)
-  }
-
-  const handleCardLeave = () => {
-    if (isMobile) return
-    setHoveredIndex(null)
   }
 
   const nextSlide = () => {
@@ -389,22 +345,23 @@ export default function TestimonialsCarousel() {
 
         <div
           ref={containerRef}
-          className="testimonials-container mx-auto"
+          className="testimonials-container mx-auto select-none"
           onMouseMove={handleMouseMove}
           onMouseUp={handleMouseUp}
           onMouseLeave={handleMouseUp}
           onTouchMove={handleTouchMove}
           onTouchEnd={handleMouseUp}
+          style={{ userSelect: "none", WebkitUserSelect: "none", MozUserSelect: "none" }}
         >
           {testimonials.map((testimonial, index) => {
             const position = cardPositions[index] || { x: 0, y: 0, rotation: 0 }
-            const isActive = index === currentIndex || index === hoveredIndex
-            const zIndex = isActive ? 30 : 10 - Math.abs(index - (hoveredIndex ?? currentIndex))
+            const isActive = index === currentIndex
+            const zIndex = isActive ? 30 : 10 - Math.abs(index - currentIndex)
 
             return (
               <div
                 key={testimonial.id}
-                className="testimonial-card"
+                className="testimonial-card select-none"
                 data-testimonial-index={index}
                 style={{
                   transform: `translate(${position.x}px, ${position.y}px) rotate(${position.rotation}deg) ${isActive ? "scale(1.1)" : "scale(0.9)"}`,
@@ -414,49 +371,70 @@ export default function TestimonialsCarousel() {
                   top: "50%",
                   marginLeft: "-175px",
                   marginTop: "-200px",
-                  backgroundColor: isActive ? "rgba(0, 0, 0, 0.7)" : "rgba(255, 255, 255, 0.1)",
+                  backgroundColor: isActive ? "hsl(var(--card))" : "rgba(255, 255, 255, 0.1)",
                   backdropFilter: "blur(10px)",
-                  border: isActive ? "1px solid rgba(255, 255, 255, 0.3)" : "1px solid rgba(255, 255, 255, 0.1)",
+                  border: isActive ? "1px solid hsl(var(--border))" : "1px solid rgba(255, 255, 255, 0.1)",
                   boxShadow: isActive ? "0 25px 50px rgba(0, 0, 0, 0.4)" : "0 10px 20px rgba(0, 0, 0, 0.1)",
                   transition: "all 0.5s cubic-bezier(0.4, 0, 0.2, 1)",
+                  color: isActive ? "hsl(var(--card-foreground))" : "white",
+                  cursor: "grab",
+                  userSelect: "none",
+                  WebkitUserSelect: "none",
+                  MozUserSelect: "none",
                 }}
                 onMouseDown={(e) => handleMouseDown(e, index)}
                 onTouchStart={(e) => handleTouchStart(e, index)}
-                onMouseEnter={() => handleCardHover(index)}
-                onMouseLeave={handleCardLeave}
               >
-                <div className="testimonial-avatar" style={{ background: testimonial.gradient }}>
+                <div className="testimonial-avatar select-none" style={{ background: testimonial.gradient }}>
                   {testimonial.avatar}
                 </div>
 
-                <div className="testimonial-stars">{renderStars(testimonial.rating)}</div>
+                <div className="testimonial-stars select-none">{renderStars(testimonial.rating)}</div>
 
-                <div className="relative mb-4">
+                <div className="relative mb-4 select-none">
                   <Quote className="absolute -top-2 -left-2 w-6 h-6 text-python-yellow/30" />
-                  <p className="testimonial-content text-muted-foreground pl-4">"{testimonial.content}"</p>
+                  <p
+                    className="testimonial-content pl-4 select-none"
+                    style={{ color: isActive ? "hsl(var(--muted-foreground))" : "rgba(255, 255, 255, 0.8)" }}
+                  >
+                    "{testimonial.content}"
+                  </p>
                 </div>
 
-                <div>
-                  <div className="testimonial-author text-foreground">{testimonial.name}</div>
-                  <div className="testimonial-role text-muted-foreground">{testimonial.role}</div>
+                <div className="select-none">
+                  <div
+                    className="testimonial-author select-none"
+                    style={{ color: isActive ? "hsl(var(--card-foreground))" : "white" }}
+                  >
+                    {testimonial.name}
+                  </div>
+                  <div
+                    className="testimonial-role select-none"
+                    style={{ color: isActive ? "hsl(var(--muted-foreground))" : "rgba(255, 255, 255, 0.8)" }}
+                  >
+                    {testimonial.role}
+                  </div>
                 </div>
               </div>
             )
           })}
         </div>
 
-        {/* Navigation dots */}
-        <div className="flex justify-center gap-2 mt-12">
-          {testimonials.map((_, index) => (
-            <button
-              key={index}
-              className={`w-3 h-3 rounded-full transition-all duration-300 ${
-                index === currentIndex ? "bg-python-blue w-8" : "bg-muted-foreground/30 hover:bg-muted-foreground/50"
-              }`}
-              onClick={() => setCurrentIndex(index)}
-              aria-label={`Go to testimonial ${index + 1}`}
-            />
-          ))}
+        {/* Navigation dots with instruction */}
+        <div className="flex flex-col items-center gap-4 mt-12">
+          <div className="flex gap-2">
+            {testimonials.map((_, index) => (
+              <button
+                key={index}
+                className={`w-3 h-3 rounded-full transition-all duration-300 ${
+                  index === currentIndex ? "bg-python-blue w-8" : "bg-muted-foreground/30 hover:bg-muted-foreground/50"
+                }`}
+                onClick={() => setCurrentIndex(index)}
+                aria-label={`Go to testimonial ${index + 1}`}
+              />
+            ))}
+          </div>
+          <p className="text-sm text-muted-foreground">Drag left/right for navigation</p>
         </div>
 
         {/* Call to Action */}
