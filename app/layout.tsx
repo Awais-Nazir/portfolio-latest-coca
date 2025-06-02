@@ -95,7 +95,31 @@ export const metadata: Metadata = {
     google: "verification_token",
     yandex: "verification_token",
   },
-    generator: 'v0.dev'
+  generator: "v0.dev",
+}
+
+function HeaderWithSuspense() {
+  return (
+    <Suspense fallback={<div className="h-20 bg-background/80" />}>
+      <Header />
+    </Suspense>
+  )
+}
+
+function AnalyticsWithSuspense() {
+  return (
+    <Suspense fallback={null}>
+      <Analytics />
+    </Suspense>
+  )
+}
+
+function PerformanceMonitorWithSuspense() {
+  return (
+    <Suspense fallback={null}>
+      <PerformanceMonitor />
+    </Suspense>
+  )
 }
 
 export default function RootLayout({
@@ -141,10 +165,10 @@ export default function RootLayout({
       </head>
       <body className={inter.className}>
         <ThemeProvider defaultTheme="dark">
-          <PerformanceMonitor />
+          <PerformanceMonitorWithSuspense />
           <AnimatedBackground />
           <div className="flex min-h-screen flex-col">
-            <Header />
+            <HeaderWithSuspense />
             <Suspense fallback={<div className="flex-1 flex items-center justify-center">Loading...</div>}>
               <main className="flex-1">{children}</main>
             </Suspense>
@@ -153,7 +177,7 @@ export default function RootLayout({
           <ScrollToTop />
           <StickyCTA />
           <Toaster />
-          <Analytics />
+          <AnalyticsWithSuspense />
         </ThemeProvider>
       </body>
     </html>
