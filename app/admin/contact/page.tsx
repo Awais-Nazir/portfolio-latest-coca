@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { useState, useEffect, Suspense } from "react"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Trash2, AlertCircle, RefreshCw, Plus } from "lucide-react"
@@ -16,7 +16,17 @@ interface ContactSubmission {
   created_at: string
 }
 
-export default function AdminContactPage() {
+// Loading component for Suspense fallback
+function LoadingState() {
+  return (
+    <div className="flex justify-center py-12">
+      <div className="h-8 w-8 rounded-full border-t-2 border-b-2 border-primary animate-spin"></div>
+    </div>
+  )
+}
+
+// Main component content
+function AdminContactContent() {
   const [submissions, setSubmissions] = useState<ContactSubmission[]>([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
@@ -258,5 +268,14 @@ export default function AdminContactPage() {
         </div>
       ) : null}
     </div>
+  )
+}
+
+// Main component with Suspense boundary
+export default function AdminContactPage() {
+  return (
+    <Suspense fallback={<LoadingState />}>
+      <AdminContactContent />
+    </Suspense>
   )
 }
