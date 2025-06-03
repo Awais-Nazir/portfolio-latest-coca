@@ -284,7 +284,7 @@ export default function Home() {
 
               <div className="space-y-4 text-muted-foreground">
                 <p>
-                  I'm a final year Software Engineering student at UET Taxila, passionate about building innovative
+                  I'm not a final year Software Engineering student at UET Taxila, passionate about building innovative
                   solutions using Python and Data Science.
                 </p>
                 <p>
