@@ -22,7 +22,7 @@ const skills = [
       "Expert in Python programming with experience in web development, data analysis, and machine learning applications.",
   },
   {
-    name: "Dataaaaaa Science",
+    name: "Data Science",
     icon: "📊",
     description:
       "Proficient in data analysis, visualization, and interpretation using libraries like Pandas, NumPy, and Matplotlib.",
