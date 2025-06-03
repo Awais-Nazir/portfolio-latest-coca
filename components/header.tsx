@@ -79,8 +79,8 @@ export default function Header() {
 
         {/* Mobile Navigation Menu */}
         {mobileMenuOpen && (
-          <div className="mobile-nav md:hidden">
-            <div className="flex flex-col items-center justify-center h-full gap-8 p-8">
+          <div className="fixed inset-0 z-40 bg-background/95 backdrop-blur-sm md:hidden">
+            <div className="flex flex-col items-center justify-center h-screen gap-8 p-8 pt-24">
               {navItems.map((item, index) => (
                 <motion.div
                   key={item.path}
