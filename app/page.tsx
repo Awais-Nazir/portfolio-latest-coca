@@ -251,7 +251,7 @@ export default function Home() {
           </div>
 
           <div className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center animate-in">
-            <span className="text-sm text-muted-foreground mb-2">Scroll to explore</span>
+            <span className="text-sm text-muted-foreground mb-2"></span>
             <div className="animate-bounce">
               <ArrowDown className="h-5 w-5 text-primary" />
             </div>
