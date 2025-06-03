@@ -317,9 +317,9 @@
 
 .testimonial-card:hover {
   transform: scale(1.05) !important;
-  /* box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2); */
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
   z-index: 30 !important;
-  background-color: rgba(0, 0, 0, 0.6) !important;
+  /* background-color: rgba(0, 0, 0, 0.6) !important; */
 }
 
 .testimonial-card.tilt-left {
