@@ -268,7 +268,7 @@ export default function Home() {
               <div className="relative aspect-square overflow-hidden rounded-xl border border-primary/20">
                 <div className="absolute inset-0 bg-gradient-to-br from-python-blue/10 via-transparent to-python-yellow/10" />
                 <Image
-                  src="/placeholder.svg?height=600&width=600"
+                  src="/awais-nazir.png?height=600&width=600"
                   alt="Awais Nazir"
                   fill
                   className="object-cover"
