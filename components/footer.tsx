@@ -1,5 +1,5 @@
 import Link from "next/link"
-import { Github, Linkedin, Mail, Twitter } from "lucide-react"
+import { Github, Instagram, Linkedin, Mail, Twitter } from "lucide-react"
 
 export default function Footer() {
   return (
@@ -21,7 +21,7 @@ export default function Footer() {
             </p>
             <div className="flex space-x-4 mt-6">
               <Link
-                href="https://github.com/mawaisnazir"
+                href="https://github.com/Awais-Nazir"
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="GitHub"
@@ -39,16 +39,16 @@ export default function Footer() {
                 <Linkedin className="h-5 w-5 text-muted-foreground hover:text-python-blue transition-colors" />
               </Link>
               <Link
-                href="https://twitter.com/awaisnazir"
+                href="https://www.instagram.com/itx_me_awais.n3/"
                 target="_blank"
                 rel="noopener noreferrer"
-                aria-label="Twitter"
+                aria-label="Instagram"
                 className="footer-social bg-muted/80 p-2 rounded-full hover:bg-python-yellow/10 transition-all"
               >
-                <Twitter className="h-5 w-5 text-muted-foreground hover:text-python-yellow transition-colors" />
+                <Instagram className="h-5 w-5 text-muted-foreground hover:text-python-blue transition-colors" />
               </Link>
               <Link
-                href="mailto:contact@mawaisnazir.me"
+                href="mailto:uetawais42@gmail.com"
                 aria-label="Email"
                 className="footer-social bg-muted/80 p-2 rounded-full hover:bg-python-yellow/10 transition-all"
               >
@@ -117,24 +117,25 @@ export default function Footer() {
               <li className="text-muted-foreground">
                 <span className="block">Email:</span>
                 <a
-                  href="mailto:contact@mawaisnazir.me"
+                  href="mailto:uetawais42@gmail.com"
                   className="footer-link hover:text-python-yellow transition-all inline-block"
                 >
-                  contact@mawaisnazir.me
+                  uetawais42@gmail.com
                 </a>
               </li>
               <li className="text-muted-foreground">
                 <span className="block">Phone:</span>
                 <a
-                  href="tel:+921234567890"
+                  href="tel:+923257877381"
                   className="footer-link hover:text-python-yellow transition-all inline-block"
                 >
-                  +92 123 456 7890
+                  +92 325 7******
                 </a>
               </li>
               <li className="text-muted-foreground">
                 <span className="block">Location:</span>
-                <span>Taxila, Pakistan</span>
+                <span>Taxila, Pakistan</span><br />
+                <span>Khanewal, Pakistan</span>
               </li>
             </ul>
           </div>

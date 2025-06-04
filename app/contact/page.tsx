@@ -124,7 +124,7 @@ export default function ContactPage() {
                         href="mailto:contact@mawaisnazir.me"
                         className="text-muted-foreground hover:text-primary transition-colors"
                       >
-                        contact@mawaisnazir.me
+                        uetawais42@gmail.com
                       </a>
                     </div>
                   </CardContent>
@@ -138,10 +138,10 @@ export default function ContactPage() {
                     <div>
                       <h3 className="font-medium">Phone</h3>
                       <a
-                        href="tel:+921234567890"
+                        href="tel:+923257877381"
                         className="text-muted-foreground hover:text-primary transition-colors"
                       >
-                        +92 123 456 7890
+                        +92 325 7******
                       </a>
                     </div>
                   </CardContent>
@@ -155,6 +155,7 @@ export default function ContactPage() {
                     <div>
                       <h3 className="font-medium">Location</h3>
                       <p className="text-muted-foreground">Taxila, Pakistan</p>
+                      <p className="text-muted-foreground">Khanewal, Pakistan</p>
                     </div>
                   </CardContent>
                 </Card>

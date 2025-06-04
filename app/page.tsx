@@ -17,13 +17,13 @@ import TestimonialsCarousel from "@/components/testimonials-carousel"
 const skills = [
   {
     name: "Python",
-    icon: "🐍",
+    icon: '/icons/skills/python-72.ico',
     description:
-      "Expert in Python programming with experience in web development, data analysis, and machine learning applications.",
+      "Expert in Python programming with experience in Desktop development, Database management Systems, data analysis, and machine learning applications.",
   },
   {
-    name: "Data Science",
-    icon: "📊",
+    name: "Artificial Intelligence",
+    icon: "/icons/skills/ai-72.ico",
     description:
       "Proficient in data analysis, visualization, and interpretation using libraries like Pandas, NumPy, and Matplotlib.",
   },
@@ -151,24 +151,24 @@ export default function Home() {
               fullDescription: fields.fullDescription || "",
               image: fields.image?.fields.file
                 ? {
-                    url: "https:" + fields.image.fields.file.url,
-                    width: fields.image.fields.file.details.image.width,
-                    height: fields.image.fields.file.details.image.height,
-                    title: fields.image.fields.title || "",
-                  }
+                  url: "https:" + fields.image.fields.file.url,
+                  width: fields.image.fields.file.details.image.width,
+                  height: fields.image.fields.file.details.image.height,
+                  title: fields.image.fields.title || "",
+                }
                 : {
-                    url: "/placeholder.svg?height=400&width=600",
-                    width: 600,
-                    height: 400,
-                    title: "Placeholder",
-                  },
+                  url: "/placeholder.svg?height=400&width=600",
+                  width: 600,
+                  height: 400,
+                  title: "Placeholder",
+                },
               gallery: fields.gallery
                 ? fields.gallery.map((img: any) => ({
-                    url: "https:" + img.fields.file.url,
-                    width: img.fields.file.details.image.width,
-                    height: img.fields.file.details.image.height,
-                    title: img.fields.title || "",
-                  }))
+                  url: "https:" + img.fields.file.url,
+                  width: img.fields.file.details.image.width,
+                  height: img.fields.file.details.image.height,
+                  title: img.fields.title || "",
+                }))
                 : [],
               tags: fields.tags || [],
               github: fields.github || "",
@@ -387,7 +387,9 @@ export default function Home() {
               {skills.map((skill) => (
                 <div key={skill.name} className="px-4 py-6">
                   <div className="modern-card bg-background/50 p-8 h-full flex flex-col items-center text-center">
-                    <div className="text-6xl mb-6 animate-float">{skill.icon}</div>
+                    <div className="text-6xl mb-6 animate-float">
+                    <Image src={skill.icon} alt={skill.name} width={72} height={72} />
+                    </div>
                     <h3 className="text-2xl font-bold mb-4">{skill.name}</h3>
                     <p className="text-muted-foreground">{skill.description}</p>
                   </div>
