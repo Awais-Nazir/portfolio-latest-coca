@@ -26,6 +26,7 @@ const spaceGrotesk = Space_Grotesk({
 })
 
 export const metadata: Metadata = {
+  icons: {icon: '/favicon.ico',},
   title: "Awais Nazir - Software Engineer & Python Developer",
   description:
     "Personal portfolio of Awais Nazir, a Software Engineering student at UET Taxila specializing in Python, Data Science, and Web Development.",
@@ -65,7 +66,7 @@ export const metadata: Metadata = {
     siteName: "Awais Nazir Portfolio",
     images: [
       {
-        url: "/og-image.jpg",
+        url: "/og-image.png",
         width: 1200,
         height: 630,
         alt: "Awais Nazir - Software Engineer & Python Developer",
@@ -78,7 +79,7 @@ export const metadata: Metadata = {
     description:
       "Personal portfolio of Awais Nazir, a Software Engineering student at UET Taxila specializing in Python, Data Science, and Web Development.",
     creator: "@awaisnazir",
-    images: ["/og-image.jpg"],
+    images: ["/og-image.png"],
   },
   robots: {
     index: true,
