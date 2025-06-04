@@ -59,7 +59,8 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     locale: "en_US",
-    url: "https://mawaisnazir.me",
+    // url: "https://mawaisnazir.me",
+    url: "https://awaisnazir.vercel.app/",
     title: "Awais Nazir - Software Engineer & Python Developer",
     description:
       "Personal portfolio of Awais Nazir, a Software Engineering student at UET Taxila specializing in Python, Data Science, and Web Development.",
