@@ -121,7 +121,7 @@ export default function ContactPage() {
                     <div>
                       <h3 className="font-medium">Email</h3>
                       <a
-                        href="mailto:contact@mawaisnazir.me"
+                        href="mailto:uetawais42@gmail.com"
                         className="text-muted-foreground hover:text-primary transition-colors"
                       >
                         uetawais42@gmail.com
